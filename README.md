@@ -1,1 +1,1 @@
-# Corruptometro
+# Corruptómetro
