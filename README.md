@@ -22,3 +22,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+#Avances
+
+* Listo despliegue en Heroku https://corruptometro.herokuapp.com
