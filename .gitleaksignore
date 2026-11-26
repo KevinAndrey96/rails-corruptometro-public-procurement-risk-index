@@ -1,0 +1,2 @@
+# Rails 5.1 config/secrets.yml template comment with a placeholder api_key, not a real credential
+844b6654ff47929396083ba8d085f6f2aaf84e58:config/secrets.yml:generic-api-key:16
