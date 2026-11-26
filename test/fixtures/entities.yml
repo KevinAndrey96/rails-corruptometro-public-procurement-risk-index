@@ -1,0 +1,13 @@
+san_gabriel:
+  name: Alcaldía de San Gabriel del Río
+  nit: 890981234-4
+  level: <%= Entity.levels[:municipal] %>
+  department: Antioquia
+  contracts_count: 4
+
+fondo:
+  name: Fondo Nacional de Dotación Escolar
+  nit: 800111222-7
+  level: <%= Entity.levels[:national] %>
+  department: Bogotá D.C.
+  contracts_count: 1

@@ -1,0 +1,22 @@
+horizonte:
+  name: Constructora Horizonte S.A.S.
+  document_type: <%= Contractor.document_types[:nit] %>
+  document_number: 900456123-1
+  incorporated_on: 2009-03-12
+
+consorcio:
+  name: Consorcio Placa Huella 2025
+  document_type: <%= Contractor.document_types[:nit] %>
+  document_number: 901845632-1
+  incorporated_on: 2025-02-03
+
+nutrir:
+  name: Alimentos Nutrir Colombia S.A.S.
+  document_type: <%= Contractor.document_types[:nit] %>
+  document_number: 900334871-7
+  incorporated_on: 2008-11-04
+
+lawyer:
+  name: María Fernanda Ospina Rueda
+  document_type: <%= Contractor.document_types[:cc] %>
+  document_number: "52748193"

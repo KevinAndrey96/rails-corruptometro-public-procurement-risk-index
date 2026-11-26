@@ -1,0 +1,50 @@
+road:
+  entity: san_gabriel
+  contractor: horizonte
+  reference: GAB-LP-001-2025
+  object: Rehabilitación de la malla vial urbana del barrio Centro
+  modality: <%= Contract.modalities[:licitacion_publica] %>
+  signed_on: 2025-06-10
+  start_on: 2025-06-20
+  end_on: 2026-02-20
+  initial_value: 1000000000
+  additions_value: 600000000
+  bidders_count: 1
+
+placa:
+  entity: san_gabriel
+  contractor: consorcio
+  reference: GAB-CD-002-2025
+  object: Mejoramiento de la vía terciaria de la vereda El Carmen mediante placa huella
+  modality: <%= Contract.modalities[:contratacion_directa] %>
+  signed_on: 2025-09-01
+  initial_value: 400000000
+
+food:
+  entity: san_gabriel
+  contractor: nutrir
+  reference: GAB-MC-003-2024
+  object: Suministro de alimentación escolar para las instituciones educativas oficiales
+  modality: <%= Contract.modalities[:minima_cuantia] %>
+  signed_on: 2024-03-01
+  initial_value: 80000000
+  bidders_count: 3
+
+legal:
+  entity: san_gabriel
+  contractor: lawyer
+  reference: GAB-CD-004-2026
+  object: Prestación de servicios profesionales de apoyo a la gestión jurídica
+  modality: <%= Contract.modalities[:contratacion_directa] %>
+  signed_on: 2026-03-02
+  initial_value: 50000000
+
+kits:
+  entity: fondo
+  contractor: nutrir
+  reference: ESC-SA-001-2023
+  object: Suministro de kits escolares para estudiantes de sedes rurales
+  modality: <%= Contract.modalities[:seleccion_abreviada] %>
+  signed_on: 2023-05-05
+  initial_value: 200000000
+  bidders_count: 4
