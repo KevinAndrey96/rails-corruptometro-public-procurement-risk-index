@@ -1,0 +1,27 @@
+<%= form_with model: [ :admin, entity ], class: "form card" do |form| %>
+  <%= render "shared/errors", record: entity %>
+
+  <div class="form-grid">
+    <div class="field field-full">
+      <%= form.label :name %>
+      <%= form.text_field :name, required: true, maxlength: 150 %>
+    </div>
+    <div class="field">
+      <%= form.label :nit %>
+      <%= form.text_field :nit, required: true, placeholder: "899999061-9", pattern: "[0-9]{9}-[0-9]" %>
+    </div>
+    <div class="field">
+      <%= form.label :level %>
+      <%= form.select :level, entity_level_options, {}, required: true %>
+    </div>
+    <div class="field">
+      <%= form.label :department %>
+      <%= form.text_field :department, required: true, maxlength: 60 %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit class: "button" %>
+    <%= link_to t("app.cancel"), admin_entities_path, class: "button button-ghost" %>
+  </div>
+<% end %>

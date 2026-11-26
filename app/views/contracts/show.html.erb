@@ -1,0 +1,78 @@
+<% content_for :title, "#{@contract.reference} · #{@contract.entity.name}" %>
+<% content_for :description, truncate(@contract.object, length: 155) %>
+
+<header class="page-header">
+  <div>
+    <p class="breadcrumb"><%= link_to @contract.entity.name, entity_path(@contract.entity) %></p>
+    <h1><%= @contract.reference %></h1>
+    <p class="muted"><%= @contract.object %></p>
+  </div>
+  <div class="header-side">
+    <%= risk_badge(@contract.risk_score) %>
+    <% if authenticated? %>
+      <%= link_to t("app.edit"), edit_admin_contract_path(@contract), class: "button button-ghost" %>
+    <% end %>
+  </div>
+</header>
+
+<div class="grid-2">
+  <section class="card">
+    <dl class="facts">
+      <dt><%= t(".entity") %></dt>
+      <dd><%= link_to @contract.entity.name, entity_path(@contract.entity) %></dd>
+      <dt><%= t(".contractor") %></dt>
+      <dd>
+        <%= link_to @contract.contractor.name, contractor_path(@contract.contractor) %>
+        <span class="meta"><%= contractor_document(@contract.contractor) %></span>
+      </dd>
+      <dt><%= t(".modality") %></dt>
+      <dd><%= t("contracts.modalities.#{@contract.modality}") %></dd>
+      <dt><%= t(".signed_on") %></dt>
+      <dd><%= l(@contract.signed_on, format: :long) %></dd>
+      <dt><%= t(".term") %></dt>
+      <dd>
+        <% if @contract.start_on && @contract.end_on %>
+          <%= t(".term_value", start: l(@contract.start_on), finish: l(@contract.end_on)) %>
+        <% else %>
+          <%= t(".not_reported") %>
+        <% end %>
+      </dd>
+      <dt><%= t(".bidders_count") %></dt>
+      <dd><%= @contract.bidders_count || t(".not_reported") %></dd>
+    </dl>
+  </section>
+
+  <section class="card">
+    <dl class="facts">
+      <dt><%= t(".initial_value") %></dt>
+      <dd><%= cop(@contract.initial_value) %></dd>
+      <dt><%= t(".additions_value") %></dt>
+      <dd>
+        <%= cop(@contract.additions_value) %>
+        <span class="meta"><%= t(".additions_ratio", ratio: percentage(@contract.additions_ratio)) %></span>
+      </dd>
+      <dt><%= t(".total_value") %></dt>
+      <dd><strong><%= cop(@contract.total_value) %></strong></dd>
+    </dl>
+  </section>
+</div>
+
+<section class="card">
+  <h2><%= t(".flags_title") %></h2>
+  <% if @contract.flags.any? %>
+    <ul class="flags">
+      <% @contract.flags.each do |flag| %>
+        <li class="flag">
+          <div class="flag-header">
+            <strong><%= flag.name %></strong>
+            <span class="badge badge-high"><%= t(".weight", weight: flag.weight) %></span>
+          </div>
+          <p><%= flag.description %></p>
+          <p class="meta"><%= t(".legal_basis", basis: flag.legal_basis) %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="empty-state"><%= t(".no_flags") %></p>
+  <% end %>
+</section>

@@ -1,0 +1,57 @@
+<% content_for :title, t(".title") %>
+
+<header class="page-header">
+  <div>
+    <h1><%= t(".title") %></h1>
+    <p class="muted"><%= t(".lead") %></p>
+  </div>
+</header>
+
+<div class="grid-2">
+  <section class="card prose">
+    <h2><%= t(".score_title") %></h2>
+    <p><%= t(".score_body") %></p>
+    <h2><%= t(".index_title") %></h2>
+    <p><%= t(".index_body") %></p>
+    <h2><%= t(".levels_title") %></h2>
+    <p><%= t(".levels_body") %></p>
+  </section>
+
+  <section class="card prose">
+    <h2><%= t(".windows_title") %></h2>
+    <p><%= t(".windows_body") %></p>
+    <ul>
+      <% @windows.each do |window| %>
+        <li><%= t(".window", start: l(window.begin, format: :long), finish: l(window.end, format: :long)) %></li>
+      <% end %>
+    </ul>
+    <h2><%= t(".limits_title") %></h2>
+    <p><%= t(".limits_body") %></p>
+  </section>
+</div>
+
+<section class="card">
+  <h2><%= t(".flags_title") %></h2>
+  <ul class="flags">
+    <% RedFlag.all.each do |flag| %>
+      <li class="flag" id="<%= flag.key %>">
+        <div class="flag-header">
+          <strong><%= flag.name %></strong>
+          <span class="badge badge-medium"><%= t(".weight") %>: <%= flag.weight %></span>
+        </div>
+        <p><%= flag.description %></p>
+        <p class="meta"><%= flag.legal_basis %></p>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<section class="card prose">
+  <h2><%= t(".api_title") %></h2>
+  <p><%= t(".api_body") %></p>
+  <ul class="code-list">
+    <li><code>GET <%= api_v1_entities_path %></code></li>
+    <li><code>GET <%= api_v1_contracts_path %>?flag=single_bidder&amp;min_score=50</code></li>
+    <li><code>GET <%= api_v1_red_flags_path %></code></li>
+  </ul>
+</section>

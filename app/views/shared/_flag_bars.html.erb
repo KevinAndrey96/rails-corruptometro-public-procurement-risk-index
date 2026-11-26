@@ -1,0 +1,11 @@
+<ul class="flag-bars">
+  <% counts.sort_by { |_flag, count| -count }.each do |flag, count| %>
+    <li>
+      <div class="flag-bar-label">
+        <%= flag_chip(flag) %>
+        <span class="meta"><%= count %></span>
+      </div>
+      <progress max="<%= [ total, 1 ].max %>" value="<%= count %>" aria-label="<%= flag.name %>"></progress>
+    </li>
+  <% end %>
+</ul>

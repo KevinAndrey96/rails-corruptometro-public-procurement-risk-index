@@ -1,0 +1,35 @@
+<% content_for :title, t(".title") %>
+
+<header class="page-header">
+  <div>
+    <h1><%= t(".title") %></h1>
+    <p class="muted"><%= t(".lead") %></p>
+  </div>
+</header>
+
+<%= form_with url: entities_path, method: :get, class: "filters card", data: { turbo_action: "replace" } do |form| %>
+  <div class="field">
+    <%= form.label :department, t(".department") %>
+    <%= form.select :department, @departments, { include_blank: t("app.all"), selected: params[:department] } %>
+  </div>
+  <div class="field">
+    <%= form.label :level, t(".level") %>
+    <%= form.select :level, entity_level_options, { include_blank: t("app.all"), selected: params[:level] } %>
+  </div>
+  <div class="filters-actions">
+    <%= form.submit t("app.apply"), name: nil, class: "button" %>
+    <%= link_to t("app.clear"), entities_path, class: "button button-ghost" %>
+  </div>
+<% end %>
+
+<section class="card">
+  <% if @page.records.any? %>
+    <ul class="list">
+      <%= render partial: "entity_row", collection: @page.records, as: :entity, locals: { offset: (@page.number - 1) * @page.size } %>
+    </ul>
+  <% else %>
+    <p class="empty-state"><%= t(".empty") %></p>
+  <% end %>
+</section>
+
+<%= render "shared/pagination", page: @page %>

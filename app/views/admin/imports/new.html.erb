@@ -1,0 +1,30 @@
+<% content_for :title, t(".title") %>
+<%= render "admin/nav" %>
+
+<header class="page-header">
+  <div>
+    <h1><%= t(".title") %></h1>
+    <p class="muted"><%= t(".lead") %></p>
+  </div>
+</header>
+
+<%= form_with url: admin_import_path, multipart: true, class: "form card" do |form| %>
+  <%= render "shared/errors", record: @import %>
+
+  <div class="field">
+    <%= form.label :file, t(".file") %>
+    <%= form.file_field :file, accept: ".csv,text/csv", required: true %>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit t(".submit"), class: "button" %>
+  </div>
+<% end %>
+
+<section class="card prose">
+  <h2><%= t(".required") %></h2>
+  <p class="code-list"><code><%= ContractImport::REQUIRED_HEADERS.join(", ") %></code></p>
+  <h2><%= t(".optional") %></h2>
+  <p class="code-list"><code><%= ContractImport::OPTIONAL_HEADERS.join(", ") %></code></p>
+  <p class="meta"><%= t(".formats") %></p>
+</section>

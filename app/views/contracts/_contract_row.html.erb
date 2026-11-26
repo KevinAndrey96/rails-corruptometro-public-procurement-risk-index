@@ -1,0 +1,15 @@
+<li class="row">
+  <div class="row-main">
+    <%= link_to contract.reference, contract_path(contract), class: "row-title" %>
+    <p class="row-text"><%= truncate(contract.object, length: 140) %></p>
+    <p class="meta">
+      <%= link_to contract.entity.name, entity_path(contract.entity) %> ·
+      <%= t("contracts.modalities.#{contract.modality}") %> ·
+      <%= t("contracts.contract_row.signed_on", date: l(contract.signed_on)) %>
+    </p>
+  </div>
+  <div class="row-side">
+    <%= risk_badge(contract.risk_score) %>
+    <strong><%= compact_cop(contract.total_value) %></strong>
+  </div>
+</li>

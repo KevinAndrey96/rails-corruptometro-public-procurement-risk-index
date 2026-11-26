@@ -1,0 +1,28 @@
+<%= form_with model: [ :admin, contractor ], class: "form card" do |form| %>
+  <%= render "shared/errors", record: contractor %>
+
+  <div class="form-grid">
+    <div class="field field-full">
+      <%= form.label :name %>
+      <%= form.text_field :name, required: true, maxlength: 150 %>
+    </div>
+    <div class="field">
+      <%= form.label :document_type %>
+      <%= form.select :document_type, Contractor.document_types.keys.map { |type| [ Contractor.human_attribute_name("document_type.#{type}"), type ] }, {}, required: true %>
+    </div>
+    <div class="field">
+      <%= form.label :document_number %>
+      <%= form.text_field :document_number, required: true, maxlength: 11 %>
+    </div>
+    <div class="field">
+      <%= form.label :incorporated_on %>
+      <%= form.date_field :incorporated_on, max: Date.current %>
+      <small class="meta"><%= t(".incorporated_on_hint") %></small>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit class: "button" %>
+    <%= link_to t("app.cancel"), admin_contractors_path, class: "button button-ghost" %>
+  </div>
+<% end %>

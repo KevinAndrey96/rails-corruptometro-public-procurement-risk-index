@@ -1,0 +1,47 @@
+<% content_for :title, t(".title") %>
+<%= render "admin/nav" %>
+
+<header class="page-header">
+  <h1><%= t(".title") %></h1>
+  <div class="header-side">
+    <%= link_to t(".import"), new_admin_import_path, class: "button button-ghost" %>
+    <%= link_to t(".new"), new_admin_contract_path, class: "button" %>
+  </div>
+</header>
+
+<section class="card">
+  <% if @page.records.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"><%= Contract.human_attribute_name(:reference) %></th>
+          <th scope="col"><%= Contract.human_attribute_name(:entity) %></th>
+          <th scope="col"><%= Contract.human_attribute_name(:signed_on) %></th>
+          <th scope="col" class="numeric"><%= Contract.human_attribute_name(:initial_value) %></th>
+          <th scope="col"><%= Entity.human_attribute_name(:risk_index) %></th>
+          <th scope="col"><span class="sr-only"><%= t("app.edit") %></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @page.records.each do |contract| %>
+          <tr id="<%= dom_id(contract) %>">
+            <td><%= link_to contract.reference, contract_path(contract) %></td>
+            <td><%= contract.entity.name %></td>
+            <td><%= l(contract.signed_on) %></td>
+            <td class="numeric"><%= cop(contract.total_value) %></td>
+            <td><%= risk_badge(contract.risk_score) %></td>
+            <td class="actions">
+              <%= link_to t("app.edit"), edit_admin_contract_path(contract) %>
+              <%= button_to t("app.destroy"), admin_contract_path(contract), method: :delete, class: "link-danger",
+                    form: { data: { turbo_confirm: t(".confirm_destroy", reference: contract.reference) } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="empty-state"><%= t(".empty") %></p>
+  <% end %>
+</section>
+
+<%= render "shared/pagination", page: @page %>

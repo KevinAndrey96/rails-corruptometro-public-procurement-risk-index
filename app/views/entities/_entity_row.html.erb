@@ -1,0 +1,14 @@
+<li class="row">
+  <span class="rank"><%= offset + entity_counter + 1 %></span>
+  <div class="row-main">
+    <%= link_to entity.name, entity_path(entity), class: "row-title" %>
+    <p class="meta">
+      NIT <%= entity.nit %> · <%= t("entities.levels.#{entity.level}") %> · <%= entity.department %> ·
+      <%= t("entities.entity_row.contracts", count: entity.contracts_count) %>
+    </p>
+  </div>
+  <div class="row-side">
+    <%= risk_badge(entity.risk_index) %>
+    <strong><%= compact_cop(entity.contracted_value) %></strong>
+  </div>
+</li>

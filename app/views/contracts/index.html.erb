@@ -1,0 +1,47 @@
+<% content_for :title, t(".title") %>
+
+<header class="page-header">
+  <div>
+    <h1><%= t(".title") %></h1>
+    <p class="muted"><%= t(".lead") %></p>
+  </div>
+</header>
+
+<%= form_with url: contracts_path, method: :get, class: "filters card", data: { turbo_action: "replace" } do |form| %>
+  <div class="field field-wide">
+    <%= form.label :q, t(".search") %>
+    <%= form.search_field :q, value: params[:q], placeholder: t(".search_placeholder") %>
+  </div>
+  <div class="field">
+    <%= form.label :flag, t(".flag") %>
+    <%= form.select :flag, flag_options, { include_blank: t("app.all"), selected: params[:flag] } %>
+  </div>
+  <div class="field">
+    <%= form.label :modality, t(".modality") %>
+    <%= form.select :modality, modality_options, { include_blank: t("app.all"), selected: params[:modality] } %>
+  </div>
+  <div class="field">
+    <%= form.label :department, t(".department") %>
+    <%= form.select :department, @departments, { include_blank: t("app.all"), selected: params[:department] } %>
+  </div>
+  <div class="field">
+    <%= form.label :sort, t(".sort") %>
+    <%= form.select :sort, [ [ t(".sort_risk"), "risk" ], [ t(".sort_recent"), "recent" ] ], { selected: params[:sort] } %>
+  </div>
+  <div class="filters-actions">
+    <%= form.submit t("app.apply"), name: nil, class: "button" %>
+    <%= link_to t("app.clear"), contracts_path, class: "button button-ghost" %>
+  </div>
+<% end %>
+
+<section class="card">
+  <% if @page.records.any? %>
+    <ul class="list">
+      <%= render partial: "contract_row", collection: @page.records, as: :contract %>
+    </ul>
+  <% else %>
+    <p class="empty-state"><%= t(".empty") %></p>
+  <% end %>
+</section>
+
+<%= render "shared/pagination", page: @page %>

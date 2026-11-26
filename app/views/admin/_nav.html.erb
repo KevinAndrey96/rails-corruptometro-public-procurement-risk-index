@@ -1,0 +1,7 @@
+<nav class="subnav" aria-label="<%= t("app.admin_navigation") %>">
+  <%= nav_link t("admin.contracts.index.title"), admin_contracts_path %>
+  <%= nav_link t("admin.contracts.index.entities"), admin_entities_path %>
+  <%= nav_link t("admin.contracts.index.contractors"), admin_contractors_path %>
+  <%= nav_link t("nav.imports"), new_admin_import_path %>
+  <span class="meta subnav-user"><%= Current.user.email_address %></span>
+</nav>

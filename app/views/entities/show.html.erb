@@ -1,0 +1,54 @@
+<% content_for :title, @entity.name %>
+
+<header class="page-header">
+  <div>
+    <p class="breadcrumb"><%= link_to t("nav.entities"), entities_path %></p>
+    <h1><%= @entity.name %></h1>
+    <p class="muted">NIT <%= @entity.nit %> · <%= t("entities.levels.#{@entity.level}") %> · <%= @entity.department %></p>
+  </div>
+  <div class="header-side">
+    <%= risk_badge(@entity.risk_index) %>
+  </div>
+</header>
+
+<section class="kpis">
+  <%= render "shared/kpi", label: t(".risk_index"), value: @entity.risk_index %>
+  <%= render "shared/kpi", label: t(".contracts"), value: @summary.contracts_count %>
+  <%= render "shared/kpi", label: t(".contracted_value"), value: compact_cop(@summary.total_value) %>
+  <%= render "shared/kpi", label: t(".direct_share"), value: percentage(@summary.direct_award_share) %>
+</section>
+
+<% if @summary.contracts_count.zero? %>
+  <div class="card empty-state"><p><%= t(".empty") %></p></div>
+<% else %>
+  <div class="grid-2">
+    <section class="card">
+      <h2><%= t(".flags_title") %></h2>
+      <%= render "shared/flag_bars", counts: @summary.flag_counts, total: @summary.contracts_count %>
+    </section>
+
+    <section class="card">
+      <h2><%= t(".contractors_title") %></h2>
+      <ol class="ranking">
+        <% @top_contractors.each do |id, name, value| %>
+          <li class="ranking-item">
+            <div class="ranking-main">
+              <%= link_to name, contractor_path(id) %>
+              <span class="meta"><%= compact_cop(value) %></span>
+            </div>
+            <strong><%= percentage(value.fdiv(@summary.total_value)) %></strong>
+          </li>
+        <% end %>
+      </ol>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2><%= t(".contracts_title") %></h2>
+    <ul class="list">
+      <%= render partial: "contracts/contract_row", collection: @page.records, as: :contract %>
+    </ul>
+  </section>
+
+  <%= render "shared/pagination", page: @page %>
+<% end %>

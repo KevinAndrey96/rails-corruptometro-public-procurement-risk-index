@@ -1,0 +1,38 @@
+<% content_for :title, t(".title") %>
+<%= render "admin/nav" %>
+
+<header class="page-header">
+  <h1><%= t(".title") %></h1>
+  <%= link_to t(".new"), new_admin_entity_path, class: "button" %>
+</header>
+
+<section class="card">
+  <% if @page.records.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"><%= Entity.human_attribute_name(:name) %></th>
+          <th scope="col"><%= Entity.human_attribute_name(:nit) %></th>
+          <th scope="col"><%= Entity.human_attribute_name(:level) %></th>
+          <th scope="col"><%= Entity.human_attribute_name(:department) %></th>
+          <th scope="col"><span class="sr-only"><%= t("app.edit") %></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @page.records.each do |entity| %>
+          <tr id="<%= dom_id(entity) %>">
+            <td><%= link_to entity.name, entity_path(entity) %></td>
+            <td><%= entity.nit %></td>
+            <td><%= t("entities.levels.#{entity.level}") %></td>
+            <td><%= entity.department %></td>
+            <td class="actions"><%= link_to t("app.edit"), edit_admin_entity_path(entity) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="empty-state"><%= t(".empty") %></p>
+  <% end %>
+</section>
+
+<%= render "shared/pagination", page: @page %>

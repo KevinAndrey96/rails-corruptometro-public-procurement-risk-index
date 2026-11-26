@@ -1,0 +1,55 @@
+<%= form_with model: [ :admin, contract ], class: "form card" do |form| %>
+  <%= render "shared/errors", record: contract %>
+
+  <div class="form-grid">
+    <div class="field">
+      <%= form.label :entity_id %>
+      <%= form.select :entity_id, @entities, { prompt: t(".select_entity") }, required: true %>
+    </div>
+    <div class="field">
+      <%= form.label :contractor_id %>
+      <%= form.select :contractor_id, @contractors, { prompt: t(".select_contractor") }, required: true %>
+    </div>
+    <div class="field">
+      <%= form.label :reference %>
+      <%= form.text_field :reference, required: true, maxlength: 60 %>
+    </div>
+    <div class="field">
+      <%= form.label :modality %>
+      <%= form.select :modality, modality_options, {}, required: true %>
+    </div>
+    <div class="field field-full">
+      <%= form.label :object %>
+      <%= form.text_area :object, rows: 3, required: true, maxlength: 2_000 %>
+    </div>
+    <div class="field">
+      <%= form.label :signed_on %>
+      <%= form.date_field :signed_on, required: true %>
+    </div>
+    <div class="field">
+      <%= form.label :bidders_count %>
+      <%= form.number_field :bidders_count, min: 1, step: 1 %>
+    </div>
+    <div class="field">
+      <%= form.label :start_on %>
+      <%= form.date_field :start_on %>
+    </div>
+    <div class="field">
+      <%= form.label :end_on %>
+      <%= form.date_field :end_on %>
+    </div>
+    <div class="field">
+      <%= form.label :initial_value %>
+      <%= form.number_field :initial_value, min: 1, step: 1, required: true %>
+    </div>
+    <div class="field">
+      <%= form.label :additions_value %>
+      <%= form.number_field :additions_value, min: 0, step: 1 %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= form.submit class: "button" %>
+    <%= link_to t("app.cancel"), admin_contracts_path, class: "button button-ghost" %>
+  </div>
+<% end %>

@@ -1,0 +1,50 @@
+<% content_for :title, t(".title") %>
+
+<header class="page-header">
+  <div>
+    <h1><%= t(".title") %></h1>
+    <p class="muted"><%= t(".lead", count: number_with_delimiter(@summary.contracts_count, delimiter: ".")) %></p>
+  </div>
+</header>
+
+<% if @summary.contracts_count.zero? %>
+  <div class="card empty-state"><p><%= t(".empty") %></p></div>
+<% else %>
+  <section class="kpis">
+    <%= render "shared/kpi", label: t(".contracts"), value: number_with_delimiter(@summary.contracts_count, delimiter: ".") %>
+    <%= render "shared/kpi", label: t(".total_value"), value: compact_cop(@summary.total_value) %>
+    <%= render "shared/kpi", label: t(".flagged"), value: percentage(@summary.flagged_share) %>
+    <%= render "shared/kpi", label: t(".direct_share"), value: percentage(@summary.direct_award_share) %>
+  </section>
+
+  <div class="grid-2">
+    <section class="card">
+      <h2><%= t(".entities_title") %></h2>
+      <ol class="ranking">
+        <% @riskiest_entities.each do |entity| %>
+          <li class="ranking-item">
+            <div class="ranking-main">
+              <%= link_to entity.name, entity_path(entity) %>
+              <span class="meta"><%= entity.department %> · <%= compact_cop(entity.contracted_value) %></span>
+            </div>
+            <%= risk_badge(entity.risk_index) %>
+          </li>
+        <% end %>
+      </ol>
+      <p class="card-footer"><%= link_to t(".see_all_entities"), entities_path %></p>
+    </section>
+
+    <section class="card">
+      <h2><%= t(".flags_title") %></h2>
+      <%= render "shared/flag_bars", counts: @summary.flag_counts, total: @summary.contracts_count %>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2><%= t(".contracts_title") %></h2>
+    <ul class="list">
+      <%= render partial: "contracts/contract_row", collection: @riskiest_contracts, as: :contract %>
+    </ul>
+    <p class="card-footer"><%= link_to t(".see_all_contracts"), contracts_path %></p>
+  </section>
+<% end %>

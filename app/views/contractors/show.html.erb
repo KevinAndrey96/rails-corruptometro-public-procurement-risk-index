@@ -1,0 +1,29 @@
+<% content_for :title, @contractor.name %>
+
+<header class="page-header">
+  <div>
+    <p class="breadcrumb"><%= link_to t("nav.contracts"), contracts_path %></p>
+    <h1><%= @contractor.name %></h1>
+    <p class="muted">
+      <%= contractor_document(@contractor) %>
+      <% if @contractor.incorporated_on %>
+        · <%= t(".incorporated_on", date: l(@contractor.incorporated_on, format: :long)) %>
+      <% end %>
+    </p>
+  </div>
+</header>
+
+<section class="kpis">
+  <%= render "shared/kpi", label: t(".contracts"), value: @summary.contracts_count %>
+  <%= render "shared/kpi", label: t(".contracted_value"), value: compact_cop(@summary.total_value) %>
+  <%= render "shared/kpi", label: t(".entities"), value: @contractor.entities.count %>
+</section>
+
+<section class="card">
+  <h2><%= t(".contracts_title") %></h2>
+  <ul class="list">
+    <%= render partial: "contracts/contract_row", collection: @page.records, as: :contract %>
+  </ul>
+</section>
+
+<%= render "shared/pagination", page: @page %>

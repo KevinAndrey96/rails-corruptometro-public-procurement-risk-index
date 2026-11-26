@@ -1,0 +1,36 @@
+<% content_for :title, t(".title") %>
+<%= render "admin/nav" %>
+
+<header class="page-header">
+  <h1><%= t(".title") %></h1>
+  <%= link_to t(".new"), new_admin_contractor_path, class: "button" %>
+</header>
+
+<section class="card">
+  <% if @page.records.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"><%= Contractor.human_attribute_name(:name) %></th>
+          <th scope="col"><%= Contractor.human_attribute_name(:document_number) %></th>
+          <th scope="col"><%= Contractor.human_attribute_name(:incorporated_on) %></th>
+          <th scope="col"><span class="sr-only"><%= t("app.edit") %></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @page.records.each do |contractor| %>
+          <tr id="<%= dom_id(contractor) %>">
+            <td><%= link_to contractor.name, contractor_path(contractor) %></td>
+            <td><%= contractor.document_type.upcase %> <%= contractor.document_number %></td>
+            <td><%= contractor.incorporated_on ? l(contractor.incorporated_on) : "-" %></td>
+            <td class="actions"><%= link_to t("app.edit"), edit_admin_contractor_path(contractor) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="empty-state"><%= t(".empty") %></p>
+  <% end %>
+</section>
+
+<%= render "shared/pagination", page: @page %>
