@@ -1,9 +1,16 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# Admin account from ADMIN_EMAIL and ADMIN_PASSWORD, so no credential lives in the repository.
+password = ENV["ADMIN_PASSWORD"]
+
+if password.present?
+  admin = User.find_or_initialize_by(email_address: ENV.fetch("ADMIN_EMAIL", "admin@example.com"))
+  admin.update!(password: password, password_confirmation: password)
+  puts "Admin account ready for #{admin.email_address}"
+else
+  puts "ADMIN_PASSWORD is not set, skipping the admin account"
+end
+
+# Fictional demo contracts loaded through the same importer the admin area uses.
+if ENV.fetch("LOAD_DEMO_DATA", "true") == "true" && Contract.none?
+  result = ContractImport.new(content: Rails.root.join("db/samples/contratos_demo.csv").read).call
+  puts "Demo data: #{result.created} contracts imported, #{result.failures.size} rows rejected"
+end
