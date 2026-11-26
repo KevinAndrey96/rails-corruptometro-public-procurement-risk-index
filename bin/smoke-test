@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Probes a running instance: health check, public dashboard, JSON API, admin guard and security headers.
+set -euo pipefail
+
+base_url="${1:-http://localhost:3000}"
+
+for _ in $(seq 1 30); do
+  curl -fsS "$base_url/up" >/dev/null 2>&1 && break
+  sleep 2
+done
+
+curl -fsS "$base_url/up" >/dev/null
+echo "ok: /up"
+
+curl -fsS "$base_url/" | grep -q "Panel de riesgo"
+echo "ok: public dashboard renders in spanish"
+
+curl -fsS "$base_url/api/v1/red_flags" | grep -q '"legal_basis"'
+echo "ok: json api answers"
+
+contracts=$(curl -fsS "$base_url/api/v1/contracts?per_page=1")
+grep -q '"total_count":63' <<<"$contracts" || { echo "expected the 63 demo contracts, got: $contracts"; exit 1; }
+echo "ok: demo dataset imported and scored"
+
+status=$(curl -s -o /dev/null -w "%{http_code}" "$base_url/admin")
+[ "$status" = "302" ] || { echo "expected 302 for anonymous admin, got $status"; exit 1; }
+echo "ok: admin area requires a session"
+
+headers=$(curl -sI "$base_url/")
+grep -qi "^content-security-policy:.*frame-ancestors 'none'" <<<"$headers" || { echo "missing content security policy"; exit 1; }
+grep -qi "^x-content-type-options: nosniff" <<<"$headers" || { echo "missing nosniff header"; exit 1; }
+echo "ok: security headers present"
