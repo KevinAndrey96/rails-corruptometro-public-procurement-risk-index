@@ -1,0 +1,376 @@
+es:
+  app:
+    name: Corruptómetro
+    tagline: Índice de riesgo en la contratación pública colombiana
+    description: Corruptómetro calcula banderas rojas e índices de riesgo de corrupción en la contratación pública de Colombia a partir de datos estilo SECOP II.
+    navigation: Navegación principal
+    admin_navigation: Administración
+    sign_in: Ingresar
+    sign_out: Cerrar sesión
+    cancel: Cancelar
+    edit: Editar
+    destroy: Eliminar
+    save: Guardar
+    apply: Filtrar
+    clear: Limpiar
+    all: Todos
+    disclaimer: Los datos de demostración son ficticios. Un puntaje alto es una alerta para revisar el contrato, no una prueba de corrupción.
+    footer: Proyecto de código abierto de Kevin Andrey Herrera Silva.
+    source_code: Código fuente
+    form_errors:
+      one: "Revisa el formulario: hay 1 error."
+      other: "Revisa el formulario: hay %{count} errores."
+    pagination:
+      label: Paginación
+      previous: Anterior
+      next: Siguiente
+      summary: Página %{page} de %{pages} · %{count} registros
+
+  nav:
+    dashboard: Panel
+    entities: Entidades
+    contracts: Contratos
+    methodology: Metodología
+    admin: Administrar
+    imports: Importar CSV
+
+  helpers:
+    money:
+      millions: "$ %{amount} M"
+    submit:
+      contract:
+        create: Registrar contrato
+        update: Guardar cambios
+      entity:
+        create: Registrar entidad
+        update: Guardar cambios
+      contractor:
+        create: Registrar contratista
+        update: Guardar cambios
+
+  risk_levels:
+    badge: "%{score} · %{level}"
+    low: riesgo bajo
+    medium: riesgo medio
+    high: riesgo alto
+
+  red_flags:
+    additions_over_cap:
+      name: Adiciones superiores al 50 %
+      description: Las adiciones superan la mitad del valor inicial del contrato, el tope legal para contratos estatales.
+      legal_basis: Ley 80 de 1993, artículo 40, parágrafo
+    single_bidder:
+      name: Oferente único
+      description: Un proceso competitivo terminó con un solo proponente, lo que anula la competencia que justifica la modalidad.
+      legal_basis: Ley 1150 de 2007, artículo 2 (modalidades de selección)
+    direct_award:
+      name: Contratación directa
+      description: El contrato se adjudicó sin proceso competitivo. Es legal en causales taxativas, pero concentra el riesgo.
+      legal_basis: Ley 1150 de 2007, artículo 2, numeral 4
+    new_contractor:
+      name: Contratista recién constituido
+      description: La empresa se constituyó menos de un año antes de firmar el contrato y no acredita trayectoria.
+      legal_basis: Decreto 1082 de 2015, requisitos habilitantes de experiencia
+    contractor_concentration:
+      name: Concentración en un contratista
+      description: Un solo contratista acumula más del 40 % del valor contratado por la entidad.
+      legal_basis: Ley 1474 de 2011 (Estatuto Anticorrupción), principio de selección objetiva
+    electoral_restriction:
+      name: Contratación directa en Ley de Garantías
+      description: Contrato directo firmado dentro de los cuatro meses previos a la elección presidencial y hasta la segunda vuelta.
+      legal_basis: Ley 996 de 2005, artículo 33
+
+  dashboard:
+    show:
+      title: Panel de riesgo
+      lead: Banderas rojas calculadas sobre %{count} contratos públicos.
+      contracts: Contratos analizados
+      total_value: Valor contratado
+      flagged: Contratos con alertas
+      direct_share: Valor por contratación directa
+      flags_title: Banderas rojas más frecuentes
+      entities_title: Entidades con mayor índice de riesgo
+      contracts_title: Contratos con mayor puntaje
+      see_all_entities: Ver todas las entidades
+      see_all_contracts: Ver todos los contratos
+      empty: Todavía no hay contratos. Un administrador puede importarlos desde un CSV.
+
+  entities:
+    levels:
+      national: Nacional
+      departmental: Departamental
+      municipal: Municipal
+    index:
+      title: Entidades
+      lead: Ranking por índice de riesgo ponderado por valor contratado.
+      department: Departamento
+      level: Orden
+      empty: No hay entidades con contratos para estos filtros.
+    entity_row:
+      contracts:
+        one: 1 contrato
+        other: "%{count} contratos"
+    show:
+      risk_index: Índice de riesgo
+      contracts: Contratos
+      contracted_value: Valor contratado
+      direct_share: Contratación directa
+      flags_title: Banderas rojas en la entidad
+      contractors_title: Principales contratistas
+      contracts_title: Contratos por puntaje
+      empty: Esta entidad no tiene contratos registrados.
+
+  contracts:
+    modalities:
+      licitacion_publica: Licitación pública
+      seleccion_abreviada: Selección abreviada
+      concurso_de_meritos: Concurso de méritos
+      minima_cuantia: Mínima cuantía
+      contratacion_directa: Contratación directa
+      regimen_especial: Régimen especial
+    index:
+      title: Contratos
+      lead: Busca por referencia u objeto y filtra por bandera roja, modalidad o departamento.
+      search: Buscar
+      search_placeholder: Referencia u objeto del contrato
+      flag: Bandera roja
+      modality: Modalidad
+      department: Departamento
+      sort: Orden
+      sort_risk: Mayor riesgo
+      sort_recent: Más recientes
+      empty: No hay contratos para estos filtros.
+    contract_row:
+      signed_on: Firmado el %{date}
+    show:
+      entity: Entidad
+      contractor: Contratista
+      modality: Modalidad
+      signed_on: Fecha de firma
+      term: Plazo
+      term_value: "%{start} a %{finish}"
+      not_reported: No reportado
+      initial_value: Valor inicial
+      additions_value: Adiciones
+      additions_ratio: "%{ratio} del valor inicial"
+      total_value: Valor total
+      bidders_count: Oferentes
+      flags_title: Banderas rojas
+      no_flags: Este contrato no activa ninguna bandera roja.
+      legal_basis: "Fundamento: %{basis}"
+      weight: "+%{weight} puntos"
+
+  contractors:
+    show:
+      incorporated_on: Constituida el %{date}
+      contracts: Contratos
+      contracted_value: Valor contratado
+      entities: Entidades contratantes
+      contracts_title: Contratos del contratista
+
+  pages:
+    methodology:
+      title: Metodología
+      lead: Cómo se calcula el puntaje de cada contrato y el índice de cada entidad.
+      score_title: Puntaje del contrato
+      score_body: Cada contrato suma el peso de las banderas rojas que activa. Los pesos suman 100, así que el puntaje va de 0 a 100.
+      index_title: Índice de la entidad
+      index_body: Es el promedio de los puntajes de sus contratos ponderado por valor, para que un contrato grande pese más que uno pequeño.
+      levels_title: Niveles de riesgo
+      levels_body: "Bajo de 0 a 24, medio de 25 a 49 y alto de 50 a 100."
+      flags_title: Banderas rojas
+      weight: Peso
+      windows_title: Ventanas de Ley de Garantías
+      windows_body: Periodos en los que la contratación directa está suspendida por elecciones presidenciales.
+      window: "%{start} a %{finish}"
+      api_title: API pública
+      api_body: "Los mismos datos están disponibles en JSON, sin autenticación y con límite de 120 solicitudes por minuto:"
+      limits_title: Limitaciones
+      limits_body: Las banderas son indicadores estadísticos inspirados en la literatura de riesgo de corrupción. Un puntaje alto amerita revisión; no prueba irregularidades.
+
+  admin:
+    contracts:
+      index:
+        title: Contratos
+        new: Nuevo contrato
+        import: Importar CSV
+        entities: Entidades
+        contractors: Contratistas
+        confirm_destroy: "¿Eliminar el contrato %{reference}?"
+        empty: No hay contratos registrados.
+      new:
+        title: Nuevo contrato
+      edit:
+        title: Editar contrato %{reference}
+      form:
+        select_entity: Selecciona una entidad
+        select_contractor: Selecciona un contratista
+      create:
+        created: Contrato registrado y evaluado.
+      update:
+        updated: Contrato actualizado y reevaluado.
+      destroy:
+        destroyed: Contrato eliminado.
+    entities:
+      index:
+        title: Entidades
+        new: Nueva entidad
+        empty: No hay entidades registradas.
+      new:
+        title: Nueva entidad
+      edit:
+        title: Editar entidad
+      create:
+        created: Entidad registrada.
+      update:
+        updated: Entidad actualizada.
+    contractors:
+      index:
+        title: Contratistas
+        new: Nuevo contratista
+        empty: No hay contratistas registrados.
+      new:
+        title: Nuevo contratista
+      edit:
+        title: Editar contratista
+      form:
+        incorporated_on_hint: Solo para personas jurídicas (NIT).
+      create:
+        created: Contratista registrado.
+      update:
+        updated: Contratista actualizado.
+    imports:
+      new:
+        title: Importar contratos desde CSV
+        lead: Columnas con la nomenclatura de datos abiertos de SECOP II. Las filas existentes se actualizan por entidad y referencia.
+        file: Archivo CSV
+        required: Columnas obligatorias
+        optional: Columnas opcionales
+        formats: Fechas en AAAA-MM-DD o DD/MM/AAAA. Valores en pesos, con o sin separadores de miles.
+        submit: Importar
+      show:
+        title: Resultado de la importación
+        created:
+          one: 1 contrato nuevo
+          other: "%{count} contratos nuevos"
+        updated:
+          one: 1 contrato actualizado
+          other: "%{count} contratos actualizados"
+        failed:
+          one: 1 fila con errores
+          other: "%{count} filas con errores"
+        line: Fila %{line}
+        again: Importar otro archivo
+        see_contracts: Ver contratos
+
+  contract_import:
+    unknown_value: "%{attribute} no reconocida: «%{value}»"
+    invalid_date: "%{attribute} inválida: «%{value}»"
+    columns:
+      modality: Modalidad
+      level: Orden de la entidad
+      document_type: Tipo de documento
+      signed_on: Fecha de firma
+      start_on: Fecha de inicio
+      end_on: Fecha de fin
+      incorporated_on: Fecha de constitución
+
+  activemodel:
+    errors:
+      models:
+        contract_import:
+          attributes:
+            base:
+              blank_file: Selecciona un archivo CSV con contratos.
+              file_too_large: El archivo supera el límite de %{megabytes} MB.
+              malformed_csv: El archivo no es un CSV válido.
+              too_many_rows: El archivo supera el límite de %{count} filas.
+              missing_headers: "Faltan columnas obligatorias: %{headers}."
+
+  activerecord:
+    models:
+      entity:
+        one: Entidad
+        other: Entidades
+      contractor:
+        one: Contratista
+        other: Contratistas
+      contract:
+        one: Contrato
+        other: Contratos
+      user:
+        one: Usuario
+        other: Usuarios
+    attributes:
+      entity:
+        name: Nombre
+        nit: NIT
+        level: Orden
+        department: Departamento
+        risk_index: Índice de riesgo
+      contractor:
+        name: Razón social o nombre
+        document_type: Tipo de documento
+        document_number: Número de documento
+        incorporated_on: Fecha de constitución
+      contractor/document_type:
+        nit: NIT
+        cc: Cédula de ciudadanía
+      contract:
+        entity: Entidad
+        entity_id: Entidad
+        contractor: Contratista
+        contractor_id: Contratista
+        reference: Referencia
+        object: Objeto
+        modality: Modalidad
+        signed_on: Fecha de firma
+        start_on: Fecha de inicio
+        end_on: Fecha de terminación
+        initial_value: Valor inicial (COP)
+        additions_value: Adiciones (COP)
+        bidders_count: Número de oferentes
+      user:
+        email_address: Correo electrónico
+        password: Contraseña
+        password_confirmation: Confirmar contraseña
+    errors:
+      messages:
+        invalid_nit: no es un NIT válido (formato 900123456-7 con dígito de verificación DIAN)
+        in_the_future: no puede estar en el futuro
+        before_start_on: debe ser posterior a la fecha de inicio
+
+  sessions:
+    rate_limited: Demasiados intentos. Espera unos minutos e inténtalo de nuevo.
+    new:
+      title: Iniciar sesión
+      subtitle: Acceso para administradores de datos.
+      submit: Entrar
+      forgot_password: ¿Olvidaste tu contraseña?
+    create:
+      invalid: Correo o contraseña incorrectos.
+    destroy:
+      signed_out: Sesión cerrada.
+
+  passwords:
+    rate_limited: Demasiadas solicitudes. Espera unos minutos e inténtalo de nuevo.
+    invalid_token: El enlace para restablecer la contraseña no es válido o ya expiró.
+    new:
+      title: Recuperar contraseña
+      subtitle: Te enviaremos un enlace para crear una contraseña nueva.
+      submit: Enviar instrucciones
+    create:
+      sent: Si el correo está registrado, recibirás las instrucciones en unos minutos.
+    edit:
+      title: Nueva contraseña
+      submit: Guardar contraseña
+    update:
+      reset: Contraseña actualizada. Ya puedes iniciar sesión.
+
+  passwords_mailer:
+    reset:
+      subject: Restablece tu contraseña
+      greeting: Hola,
+      instructions: "Recibimos una solicitud para cambiar tu contraseña. Puedes crear una nueva en:"
+      link: este enlace
+      expires: El enlace expira en %{time}.
